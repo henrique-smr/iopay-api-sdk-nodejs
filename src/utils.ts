@@ -8,16 +8,6 @@ export function createAxiosAdapter(apiEnv: string) {
 		baseURL: apiEnv,
 	})
 
-	adapter.interceptors.request.use((v) => {
-		console.log("CONFIG", {
-			headers: v.headers,
-			body: v.data,
-			path: v.url,
-			params: v.params
-		})
-		return v
-	})
-
 	adapter.interceptors.response.use((response) => {
 		if (response.data?.success) {
 			response.data = response.data.success
