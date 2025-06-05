@@ -18,7 +18,7 @@ export class Tokenize {
 	}
 
 	async card(cardData: IRawCard) {
-		const resp = await this.specialAdapter.post<ITokenizedCard>("v1/card/associate_token_with_customer", cardData);
+		const resp = await this.specialAdapter.post<ITokenizedCard>("v1/card/tokenize/token", cardData);
 		return resp.data;
 	}
 }
