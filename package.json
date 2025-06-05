@@ -14,8 +14,7 @@
 	"scripts": {
 		"postinstall": "npm run build",
 		"build": "rm -rf dist && tsc -p tsconfig.json",
-		"prebuild": "npx node-jq '{version, name, description}' package.json > ./src/pkgInfo.json",
-		"postbuild": "cp ./src/pkgInfo.json dist/pkgInfo.json"
+		"postbuild": "cp ./package.json dist/pkgInfo.json"
 	},
 	"devDependencies": {
 		"node-jq": "^6.0.1"
