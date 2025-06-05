@@ -2,133 +2,32 @@ import { AxiosInstance } from "axios";
 import type { Auth } from "./Auth";
 // import { ICard, ICustomer, ICustomerCardList, ICustomerList, ICustomerListParams, IRawCustomer } from "./types";
 import { createAxiosAdapter } from "./utils";
-
-interface IRawSellerNatural {
-	/*Booleano; TRUE = Enviar email de boas vindas com link para redefinição de senha da conta digital; FALSE = Não enviará email de boas vindas; Por padrão este parâmetro ficará como false*/
-	send_welcome_email: boolean
-	/*Inteiro, com 4 dígitos; Classificação do negócio pelo tipo fornecido de bens ou serviços; Consulte a listagem de MCC's na API*/
-	mcc: number
-	/*Receita estimada*/
-	revenue: number
-	/*String máximo 100 caracteres; Primeiro nome do vendedor*/
-	first_name: string
-	/*String máximo 65 caracteres; Sobrenome do vendedor*/
-	last_name: string
-	/*String máximo 40 caracteres; Email válido, para contato com o vendedor*/
-	email: string
-	/*String no formato (00)000000000; Número de Telefone do Vendedor (Telefone fixo com DDD+8 dígitos ou móvel com DDD+9 dígitos)*/
-	phone_number: string
-	/*String com 11 caracteres; CPF do Vendedor, apenas números*/
-	cpf: string
-	/*Data de nascimento do Vendedor, no formato AAAA-MM-DD*/
-	birthdate: string
-	/*String mínimo 5, máximo 40 caracteres; O nome que aparece na fatura associado a transação*/
-	statement_descriptor: string
-	/*Matriz com os dados de residência do Vendedor*/
-	address:
-	{
-		/*String mínimo 5, máximo 100 caracteres; Logradouro*/
-		line1: string
-		/*Inteiro até 10 dígitos; Número de residência (utilize 0 quando não ter número)*/
-		line2: number
-		/*String máximo 100 caracteres; Complemento do Endereço, apartamento, referência*/
-		line3?: string
-		/*String máximo 40 caracteres; Bairro*/
-		neighborhood: string
-		/*String máximo 40 caracteres; Cidade*/
-		city: string
-		/*String com 2 caracteres; Estado (UF - sigla da unidade federativa)*/
-		state: string
-		/*String com 9 caracteres; CEP, no formato 00000-000*/
-		zip_code: string
-		/*String com 2 caracteres; Código do País, atualmente aceito apenas "BR"*/
-		country_code: string
-	}
-	business: undefined
-}
-interface IRawSellerLegal {
-
-	/*Booleano; TRUE = Enviar email de boas vindas com link para redefinição de senha da conta digital; FALSE = Não enviará email de boas vindas; Por padrão este parâmetro ficará como false*/
-	send_welcome_email?: boolean
-	/*Inteiro, com 4 dígitos; Classificação do negócio pelo tipo fornecido de bens ou serviços; Consulte a listagem de MCC's na API*/
-	mcc: number
-	/*Receita estimada da empresa*/
-	revenue: number
-	/*String mínimo 5, máximo 40 caracteres; O nome que aparece na fatura associado a transação*/
-	statement_descriptor: string
-	/*Matriz com os dados da Empresa*/
-	business: {
-		/*String máximo 100 caracteres; Nome da empresa*/
-		name: string
-		/*String máximo 40 caracteres; Email válido, para contato com a Empresa*/
-		email: string
-		/*String no formato (00)000000000; Número de Telefone da Empresa (Telefone fixo com DDD+8 dígitos ou móvel com DDD+9 dígitos)*/
-		phone_number: string
-		/*String com 14 dígitos; CNPJ da Empresa, apenas números*/
-		cnpj: string
-		/*String; Data de abertura da Empresa, no formato AAAA-MM-DD*/
-		opening_date: string
-
-		/*String máximo 100 caracteres; URL do site da empresa*/
-		website?: string
-	}
-	/*Matriz com os dados do proprietário (sócio majoritário, representante, ou diretor) da empresa*/
-	owner: {
-		/*String máximo 100 caracteres; Primeiro nome*/
-		first_name: string
-		/*String máximo 100 caracteres; Sobrenome*/
-		last_name: string
-		/*String máximo 100 caracteres; Email para contato*/
-		email: string
-		/*String no formato (00)000000000; Número de Telefone (Telefone fixo com DDD+8 dígitos ou móvel com DDD+9 dígitos)*/
-		phone_number: string
-		/*String com 11 caracteres; CPF, apenas números*/
-		cpf: string
-		/*Data de nascimento, no formato AAAA-MM-DD*/
-		birthdate: string
-	}
-
-	/*Matriz com os dados de endereço da empresa*/
-	business_address: {
-		/*String mínimo 5, máximo 100 caracteres; Logradouro*/
-		line1: string
-		/*Inteiro até 10 dígitos; Número de residência (utilize 0 quando não ter número)*/
-		line2: number
-		/*String máximo 100 caracteres; Complemento do Endereço, apartamento, referência*/
-		line3?: string
-		/*String máximo 40 caracteres; Bairro*/
-		neighborhood: string
-		/*String máximo 40 caracteres; Cidade*/
-		city: string
-		/*String com 2 caracteres; Estado (UF - sigla da unidade federativa)*/
-		state: string
-		/*String com 9 caracteres; CEP, no formato 00000-000*/
-		zip_code: string
-
-		/*String com 2 caracteres; Código do País, atualmente aceito apenas "BR"*/
-		country_code: 'BR'
-	}
-	/*Matriz com os dados de residência do proprietário (sócio majoritário, representante, ou diretor) da empresa*/
-	owner_address: {
-		/*String mínimo 5, máximo 100 caracteres; Logradouro*/
-		line1: string
-		/*Inteiro até 10 dígitos; Número de residência (utilize 0 quando não ter número)*/
-		line2: number
-		/*String máximo 100 caracteres; Complemento do Endereço, apartamento, referência*/
-		line3?: string
-		/*String máximo 40 caracteres; Bairro*/
-		neighborhood: string
-		/*String máximo 40 caracteres; Cidade*/
-		city: string
-		/*String com 2 caracteres; Estado (UF - sigla da unidade federativa)*/
-		state: string
-		/*String com 9 caracteres; CEP, no formato 00000-000*/
-		zip_code: string
-		/*String com 2 caracteres; Código do País, atualmente aceito apenas "BR"*/
-		country_code: 'BR'
-	}
-}
-
+import { 
+	IRawSellerLegal, 
+	ISellerLegalResponse, 
+	IRawSellerNatural, 
+	ISellerNaturalResponse,
+	IDigitalAccountLogin, 
+	IDigitalAccountLoginResponse, 
+	IDigitalAccountUserListResponse, 
+	IDigitalAccountUserDeleteResponse, 
+	IRawBankAccount, 
+	IRawSellerNaturalUpdate, 
+	ISellerIndividualUpdateResponse, 
+	IRawSellerLegalUpdate, 
+	ISellerBusinessUpdateResponse, 
+	ISellerDeleteResponse,
+	IBankAccountTokenizeResponse,
+	IBankAccountAssociateResponse,
+	IBankAccountListResponse,
+	IBankAccountGetResponse,
+	IBankAccountDeleteResponse,
+	ITransferCreateRequest,
+	ITransferCreateResponse,
+	ITransferListResponse,
+	ITransferGetResponse,
+	ITransferTransactionListResponse
+} from "./types";
 
 export class Seller {
 	private adapter: AxiosInstance;
@@ -151,9 +50,9 @@ export class Seller {
 
 	}
 
-	async create(rawSeller: IRawSellerLegal): Promise<void>
-	async create(rawSeller: IRawSellerNatural): Promise<void>
-	async create(rawSeller: IRawSellerNatural | IRawSellerLegal) {
+	async create(rawSeller: IRawSellerLegal): Promise<ISellerLegalResponse>;
+	async create(rawSeller: IRawSellerNatural): Promise<ISellerNaturalResponse>;
+	async create(rawSeller: IRawSellerNatural | IRawSellerLegal): Promise<ISellerNaturalResponse | ISellerLegalResponse> {
 		const resp = await this.adapter.post(`v1/sellers/create/${rawSeller.business ? 'businesses' : 'individuals'}`, rawSeller);
 		return resp.data;
 	}
@@ -171,9 +70,112 @@ export class Seller {
 		return resp.data;
 	}
 	async getMccList() {
-		const resp = await this.adapter.get(`v1/sellers/mcc_list/`);
+		const resp = await this.adapter.get(`v1/sellers/mcc_list`);
 		return resp.data;
 	}
 
+	async getBalance(sellerID: string) {
+		const resp = await this.adapter.get(`v1/sellers/get/${sellerID}/balances`);
+		return resp.data;
+	}
+
+	async loginDigitalAccount(sellerID: string, params: IDigitalAccountLogin): Promise<IDigitalAccountLoginResponse> {
+		const resp = await this.adapter.post(`v1/sellers/digital_account/login/${sellerID}`, params);
+		return resp.data;
+	}
+	async getDigitalAccount(sellerID: string): Promise<IDigitalAccountUserListResponse> {
+		const resp = await this.adapter.get(`v1/sellers/digital_account/login/${sellerID}`);
+		return resp.data;
+	}
+	async deleteDigitalAccount(sellerID: string, email: string): Promise<IDigitalAccountUserDeleteResponse> {
+		const resp = await this.adapter.request({
+			url: `v1/sellers/digital_account/login/${sellerID}`,
+			method: 'DELETE',
+			data: {
+				email
+			}
+		});
+		return resp.data;
+	}
+
+	async autorizeSharedCustomers(sellerID: string) {
+		const resp = await this.adapter.post(`v1/shared_customers/authorize_seller`, {
+			authorized_partner: sellerID
+		});
+		return resp.data;
+	}
+
+	async listAuthorizedSharedCustomers() {
+		const resp = await this.adapter.get(`v1/shared_customers/authorized_sellers`);
+		return resp.data;
+	}
+
+	async deleteAuthorizedSharedCustomers(shared_seller_authorization_id: string) {
+		const resp = await this.adapter.delete(`v1/shared_customers/authorization/${shared_seller_authorization_id}`);
+		return resp.data;
+	}
+
+	async tokenizeBankAccount(sellerID: string, params: IRawBankAccount): Promise<IBankAccountTokenizeResponse> {
+		const resp = await this.adapter.post(`v1/sellers/bank_accounts/tokenize/${sellerID}`, params);
+		return resp.data;
+	}
+
+	async associateBankAccount(sellerID: string, token: string): Promise<IBankAccountAssociateResponse> {
+		const resp = await this.adapter.post(`v1/sellers/bank_accounts/associate_bank_account`, {
+			io_seller_id: sellerID,
+			token: token
+		});
+		return resp.data;
+	}
+
+	async listBankAccounts(sellerID: string): Promise<IBankAccountListResponse> {
+		const resp = await this.adapter.get(`v1/sellers/bank_accounts/list/${sellerID}`);
+		return resp.data;
+	}
+
+	async getBankAccount(sellerID: string, bankAccountID: string): Promise<IBankAccountGetResponse> {
+		const resp = await this.adapter.get(`v1/sellers/bank_accounts/get/${sellerID}/${bankAccountID}`);
+		return resp.data;
+	}
+
+	async deleteBankAccount(sellerID: string, bankAccountID: string): Promise<IBankAccountDeleteResponse> {
+		const resp = await this.adapter.delete(`v1/sellers/bank_accounts/delete/${sellerID}/${bankAccountID}`);
+		return resp.data;
+	}
+
+	async listTransfers(sellerID: string): Promise<ITransferListResponse> {
+		const resp = await this.adapter.get(`v1/sellers/transfers/list/${sellerID}`);
+		return resp.data;
+	}
+
+	async getTransfer(sellerID: string, transferID: string): Promise<ITransferGetResponse> {
+		const resp = await this.adapter.get(`v1/sellers/transfers/get/${sellerID}/${transferID}`);
+		return resp.data;
+	}
+
+	async listTransferTransactions(sellerID: string, transferID: string): Promise<ITransferTransactionListResponse> {
+		const resp = await this.adapter.get(`v1/sellers/transfers/get/${sellerID}/${transferID}/transactions`);
+		return resp.data;
+	}
+
+	async createTransfer(sellerID: string, bankAccountID: string, data: ITransferCreateRequest): Promise<ITransferCreateResponse> {
+		const resp = await this.adapter.post(`v1/sellers/transfers/new/${sellerID}/${bankAccountID}`, data);
+		return resp.data;
+	}
+
+	async updateIndividual(sellerID: string, data: IRawSellerNaturalUpdate): Promise<ISellerIndividualUpdateResponse> {
+		const resp = await this.adapter.patch(`v1/sellers/update/individuals/${sellerID}`, data);
+		return resp.data;
+	}
+
+	async updateBusiness(sellerID: string, data: IRawSellerLegalUpdate): Promise<ISellerBusinessUpdateResponse> {
+		const resp = await this.adapter.patch(`v1/sellers/update/businesses/${sellerID}`, data);
+		return resp.data;
+	}
+
+	async deleteSeller(ioSellerID: string, taxpayerID: string): Promise<ISellerDeleteResponse> {
+		const resp = await this.adapter.delete(`v1/sellers/delete/${ioSellerID}/${taxpayerID}`);
+		return resp.data;
+	}
 }
 

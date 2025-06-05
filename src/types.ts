@@ -451,4 +451,543 @@ export type ICustomerListParams = IListParams & {
 }
 
 export type ICustomerList = IList<ICustomer>
+export interface IRawSellerNatural {
+	/*Booleano; TRUE = Enviar email de boas vindas com link para redefinição de senha da conta digital; FALSE = Não enviará email de boas vindas; Por padrão este parâmetro ficará como false*/
+	send_welcome_email?: boolean;
+	/*Inteiro, com 4 dígitos; Classificação do negócio pelo tipo fornecido de bens ou serviços; Consulte a listagem de MCC's na API*/
+	mcc: number;
+	/*Receita estimada*/
+	revenue: number;
+	/*String máximo 100 caracteres; Primeiro nome do vendedor*/
+	first_name: string;
+	/*String máximo 65 caracteres; Sobrenome do vendedor*/
+	last_name: string;
+	/*String máximo 40 caracteres; Email válido, para contato com o vendedor*/
+	email: string;
+	/*String no formato (00)000000000; Número de Telefone do Vendedor (Telefone fixo com DDD+8 dígitos ou móvel com DDD+9 dígitos)*/
+	phone_number: string;
+	/*String com 11 caracteres; CPF do Vendedor, apenas números*/
+	cpf: string;
+	/*Data de nascimento do Vendedor, no formato AAAA-MM-DD*/
+	birthdate: string;
+	/*String mínimo 5, máximo 40 caracteres; O nome que aparece na fatura associado a transação*/
+	statement_descriptor: string;
+	/*Matriz com os dados de residência do Vendedor*/
+	address: {
+		/*String mínimo 5, máximo 100 caracteres; Logradouro*/
+		line1: string;
+		/*Inteiro até 10 dígitos; Número de residência (utilize 0 quando não ter número)*/
+		line2: number;
+		/*String máximo 100 caracteres; Complemento do Endereço, apartamento, referência*/
+		line3?: string;
+		/*String máximo 40 caracteres; Bairro*/
+		neighborhood: string;
+		/*String máximo 40 caracteres; Cidade*/
+		city: string;
+		/*String com 2 caracteres; Estado (UF - sigla da unidade federativa)*/
+		state: string;
+		/*String com 9 caracteres; CEP, no formato 00000-000*/
+		zip_code: string;
+		/*String com 2 caracteres; Código do País, atualmente aceito apenas "BR"*/
+		country_code: 'BR';
+	};
+	business: undefined;
+}
+export interface IRawSellerLegal {
+
+	/*Booleano; TRUE = Enviar email de boas vindas com link para redefinição de senha da conta digital; FALSE = Não enviará email de boas vindas; Por padrão este parâmetro ficará como false*/
+	send_welcome_email?: boolean;
+	/*Inteiro, com 4 dígitos; Classificação do negócio pelo tipo fornecido de bens ou serviços; Consulte a listagem de MCC's na API*/
+	mcc: number;
+	/*Receita estimada da empresa*/
+	revenue: number;
+	/*String mínimo 5, máximo 40 caracteres; O nome que aparece na fatura associado a transação*/
+	statement_descriptor: string;
+	/*Matriz com os dados da Empresa*/
+	business: {
+		/*String máximo 100 caracteres; Nome da empresa*/
+		name: string;
+		/*String máximo 40 caracteres; Email válido, para contato com a Empresa*/
+		email: string;
+		/*String no formato (00)000000000; Número de Telefone da Empresa (Telefone fixo com DDD+8 dígitos ou móvel com DDD+9 dígitos)*/
+		phone_number: string;
+		/*String com 14 dígitos; CNPJ da Empresa, apenas números*/
+		cnpj: string;
+		/*String; Data de abertura da Empresa, no formato AAAA-MM-DD*/
+		opening_date: string;
+
+		/*String máximo 100 caracteres; URL do site da empresa*/
+		website?: string;
+	};
+	/*Matriz com os dados do proprietário (sócio majoritário, representante, ou diretor) da empresa*/
+	owner: {
+		/*String máximo 100 caracteres; Primeiro nome*/
+		first_name: string;
+		/*String máximo 100 caracteres; Sobrenome*/
+		last_name: string;
+		/*String máximo 100 caracteres; Email para contato*/
+		email: string;
+		/*String no formato (00)000000000; Número de Telefone (Telefone fixo com DDD+8 dígitos ou móvel com DDD+9 dígitos)*/
+		phone_number: string;
+		/*String com 11 caracteres; CPF, apenas números*/
+		cpf: string;
+		/*Data de nascimento, no formato AAAA-MM-DD*/
+		birthdate: string;
+	};
+
+	/*Matriz com os dados de endereço da empresa*/
+	business_address: {
+		/*String mínimo 5, máximo 100 caracteres; Logradouro*/
+		line1: string;
+		/*Inteiro até 10 dígitos; Número de residência (utilize 0 quando não ter número)*/
+		line2: number;
+		/*String máximo 100 caracteres; Complemento do Endereço, apartamento, referência*/
+		line3?: string;
+		/*String máximo 40 caracteres; Bairro*/
+		neighborhood: string;
+		/*String máximo 40 caracteres; Cidade*/
+		city: string;
+		/*String com 2 caracteres; Estado (UF - sigla da unidade federativa)*/
+		state: string;
+		/*String com 9 caracteres; CEP, no formato 00000-000*/
+		zip_code: string;
+
+		/*String com 2 caracteres; Código do País, atualmente aceito apenas "BR"*/
+		country_code: 'BR';
+	};
+	/*Matriz com os dados de residência do proprietário (sócio majoritário, representante, ou diretor) da empresa*/
+	owner_address: {
+		/*String mínimo 5, máximo 100 caracteres; Logradouro*/
+		line1: string;
+		/*Inteiro até 10 dígitos; Número de residência (utilize 0 quando não ter número)*/
+		line2: number;
+		/*String máximo 100 caracteres; Complemento do Endereço, apartamento, referência*/
+		line3?: string;
+		/*String máximo 40 caracteres; Bairro*/
+		neighborhood: string;
+		/*String máximo 40 caracteres; Cidade*/
+		city: string;
+		/*String com 2 caracteres; Estado (UF - sigla da unidade federativa)*/
+		state: string;
+		/*String com 9 caracteres; CEP, no formato 00000-000*/
+		zip_code: string;
+		/*String com 2 caracteres; Código do País, atualmente aceito apenas "BR"*/
+		country_code: 'BR';
+	};
+}
+export interface IDigitalAccountLogin {
+	email: string;
+	password?: string;
+	user_full_name?: string;
+	send_welcome_email?: boolean;
+}
+export interface IDigitalAccountLoginResponse {
+	user_full_name: string;
+	email: string;
+	send_welcome_email: boolean;
+}
+interface IDigitalAccountUserListItem {
+	name: string;
+	email: string;
+	created_at: string;
+	updated_at: string;
+}
+export interface IDigitalAccountUserListResponse {
+	resource: 'list';
+	limit: number;
+	offset: number;
+	page: number | null;
+	sort: string;
+	total: number;
+	query_count: number;
+	has_more: boolean;
+	items: IDigitalAccountUserListItem[];
+}
+export interface IDigitalAccountUserDeleteResponse {
+	deleted: true;
+}
+enum BankAccountType {
+	/* Conta Corrente */
+	CHECKING = 'checking',
+	/* Conta Poupança */
+	SAVINGS = 'savings'
+}
+export interface IRawBankAccount {
+	/* Nome portador no registro da conta bancária */
+	holder_name: string;
+	/* Código do banco */
+	bank_code: string;
+	/* Código da agência */
+	routing_number: string;
+	/* Número da conta */
+	account_number: string;
+	/* CNPJ da conta */
+	ein?: string;
+	/* CPF da conta */
+	taxpayer_id?: string;
+	/* Tipo de conta bancária */
+	type: BankAccountType;
+}
+interface ISellerAddressUpdate {
+	line1: string;
+	line2: string;
+	line3?: string;
+	neighborhood: string;
+	city: string;
+	state: string;
+	zip_code: string;
+	country_code: 'BR';
+}
+export interface IRawSellerNaturalUpdate {
+	first_name: string;
+	last_name: string;
+	email: string;
+	phone_number: string;
+	birthdate: string;
+	statement_descriptor: string;
+	address: ISellerAddressUpdate;
+}
+interface IRawSellerLegalBusinessUpdate {
+	name: string;
+	email: string;
+	phone_number: string;
+	opening_date: string;
+	website?: string;
+}
+interface IRawSellerLegalOwnerUpdate {
+	first_name: string;
+	last_name: string;
+	email: string;
+	phone_number: string;
+	cpf: string;
+	birthdate: string;
+}
+export interface IRawSellerLegalUpdate {
+	statement_descriptor: string;
+	business: IRawSellerLegalBusinessUpdate;
+	owner: IRawSellerLegalOwnerUpdate;
+	business_address: ISellerAddressUpdate;
+	owner_address: ISellerAddressUpdate;
+}
+// Response Interfaces
+export interface ISellerNaturalResponse {
+	io_seller_id: string;
+	taxpayer_id: string;
+	type: 'individual';
+	first_name: string;
+	last_name: string;
+	description?: string | null;
+	revenue: number;
+	email: string;
+	phone_number: string;
+	mcc: number;
+	birthdate: string;
+	address_line1: string;
+	address_line2: string;
+	address_line3?: string | null;
+	neighborhood: string;
+	city: string;
+	state: string;
+	zip_code: string;
+	country_code: 'BR';
+	plan_type: string;
+	online_payments: string;
+	status: string;
+	created_by?: string | null;
+	updated_at: string;
+	created_at: string;
+	id: number;
+}
+export interface ISellerLegalResponse {
+	io_seller_id: string;
+	taxpayer_id: string;
+	type: 'business';
+	revenue: number;
+	first_name: string; // Business Name
+	last_name: string; // Often empty string
+	description?: string | null;
+	email: string; // Business Email
+	phone_number: string; // Business Phone
+	mcc: number;
+	birthdate: string; // Business Opening Date
+	address_line1: string;
+	address_line2: string;
+	address_line3?: string | null;
+	neighborhood: string;
+	city: string;
+	state: string;
+	zip_code: string;
+	country_code: 'BR';
+	plan_type: string;
+	online_payments: string;
+	status: string;
+	owner_tel: string;
+	owner_name: string;
+	owner_taxpayer_id: string;
+	owner_birthdate: string;
+	owner_email: string;
+	created_by?: string | null;
+	updated_at: string;
+	created_at: string;
+	id: number;
+}
+export interface ISellerIndividualUpdateResponse {
+	io_seller_id: string;
+	type: 'individual';
+	first_name: string;
+	last_name: string;
+	email: string;
+	phone_number: string;
+	mcc: string; // Note: string in update response
+	birthdate: string;
+	address_line1: string;
+	address_line2: string;
+	address_line3?: string | null;
+	neighborhood: string;
+	city: string;
+	state: string;
+	zip_code: string;
+	country_code: 'BR';
+	website?: string | null;
+	online_payments: number; // Note: number in update response
+	owner_tel?: string | null;
+	owner_name?: string | null;
+	owner_taxpayer_id?: string | null;
+	owner_birthdate?: string | null;
+	owner_email?: string | null;
+	plan_type: string;
+	enable_credit?: 'S' | 'N';
+	enable_boleto?: 'S' | 'N';
+	enable_pix?: 'S' | 'N';
+	credit_max_installments?: number;
+	statement_descriptor: string;
+	url_notify?: string;
+	url_allow_from?: string;
+	url_logo?: string;
+	max_transaction_amount?: number;
+	allow_register_seller?: number;
+	created_by?: string | null;
+	status: string;
+	created_at: string;
+	updated_at: string;
+}
+export interface ISellerBusinessUpdateResponse {
+	io_seller_id: string;
+	type: 'business';
+	first_name: string; // Business Name
+	last_name?: string | null; // Often empty or null
+	email: string; // Business Email
+	phone_number: string; // Business Phone
+	mcc: string; // Note: string in update response
+	birthdate: string; // Business Opening Date
+	address_line1: string;
+	address_line2: string;
+	address_line3?: string | null;
+	neighborhood: string;
+	city: string;
+	state: string;
+	zip_code: string;
+	country_code: 'BR';
+	website?: string | null;
+	online_payments: number; // Note: number in update response
+	owner_tel: string;
+	owner_name: string;
+	owner_taxpayer_id: string;
+	owner_birthdate: string;
+	owner_email: string;
+	plan_type: string;
+	enable_credit?: 'S' | 'N';
+	enable_boleto?: 'S' | 'N';
+	enable_pix?: 'S' | 'N';
+	credit_max_installments?: number;
+	statement_descriptor: string;
+	url_notify?: string;
+	url_allow_from?: string;
+	url_logo?: string;
+	max_transaction_amount?: number;
+	allow_register_seller?: number;
+	created_by?: string | null;
+	status: string;
+	created_at: string;
+	updated_at: string;
+}
+export interface ISellerDeleteResponse {
+	id: string; // This is the io_seller_id
+	resource: 'seller';
+	type: 'individual' | 'business';
+	deleted: true;
+}
+
+// MCC List
+export interface IMccItem {
+	code: string;
+	category: string;
+	description: string;
+}
+export interface IMccListResponse {
+	resource: 'list';
+	limit: number;
+	offset: number;
+	page: number | null;
+	sort: string | null;
+	total: number;
+	query_count: number;
+	has_more: boolean;
+	items: IMccItem[];
+}
+
+// Seller List Item (shared with single seller/search)
+export interface ISellerListItem {
+	io_seller_id: string;
+	type: 'individual' | 'business';
+	first_name: string;
+	last_name: string;
+	email: string;
+	phone_number: string;
+	mcc: string;
+	birthdate: string;
+	address_line1: string;
+	address_line2: string;
+	address_line3?: string | null;
+	neighborhood: string;
+	city: string;
+	state: string;
+	zip_code: string;
+	country_code: 'BR';
+	website?: string | null;
+	online_payments: number;
+	owner_tel?: string | null;
+	owner_name?: string | null;
+	owner_taxpayer_id?: string | null;
+	owner_birthdate?: string | null;
+	owner_email?: string | null;
+	plan_type: string;
+	enable_credit?: 'S' | 'N';
+	enable_boleto?: 'S' | 'N';
+	enable_pix?: 'S' | 'N';
+	credit_max_installments?: number;
+	statement_descriptor: string;
+	url_notify?: string;
+	url_allow_from?: string;
+	url_logo?: string;
+	max_transaction_amount?: number;
+	allow_register_seller?: number;
+	created_by?: string | null;
+	status: string;
+	created_at: string;
+	updated_at: string;
+	taxpayer_id?: string; // present in search
+	description?: string | null;
+	revenue?: number | null;
+	sub_arrangement_id?: number;
+}
+
+export interface ISellerListResponse {
+	resource: 'list';
+	limit: number;
+	offset: number;
+	page: number | null;
+	sort: string;
+	total: number;
+	query_count: number;
+	has_more: boolean;
+	items: ISellerListItem[];
+}
+
+// Single Seller (same as ISellerListItem)
+export type ISellerGetResponse = ISellerListItem;
+
+// Seller Balance
+export interface ISellerBalanceItems {
+	current_balance: string;
+	account_balance: string;
+}
+export interface ISellerBalanceResponse {
+	resource: 'list';
+	items: ISellerBalanceItems;
+}
+
+// Seller Search (by taxpayer id)
+export type ISellerSearchResponse = ISellerListItem;
+
+// Bank Account Types
+export interface IBankAccount {
+	id: string;
+	resource: 'bank_account';
+	holder_name: string;
+	taxpayer_id: string;
+	description: string | null;
+	bank_name: string;
+	bank_code: string;
+	type: string;
+	account_number?: string;
+	last4_digits?: string;
+	country_code: 'BR';
+	routing_number: string;
+	routing_check_digit: string | null;
+	phone_number: string | null;
+	is_active: boolean;
+	is_verified: boolean;
+	debitable: boolean;
+	customer: string | null;
+	fingerprint: string;
+	address: any;
+	verification_checklist: {
+		postal_code_check: string;
+		address_line1_check: string;
+		deposit_check: string;
+	};
+	metadata: Record<string, any>;
+	created_at: string;
+	updated_at: string;
+}
+
+export interface IBankAccountTokenizeResponse {
+	id: string;
+	resource: 'token';
+	type: 'bank_account';
+	used: boolean;
+	bank_account: IBankAccount;
+	created_at: string;
+	updated_at: string;
+}
+
+export interface IBankAccountAssociateResponse extends IBankAccount {}
+
+export interface IBankAccountListResponse {
+	resource: 'list';
+	items: IBankAccount[];
+	limit: number;
+	offset: number;
+	has_more: boolean;
+	query_count: number;
+	total: number;
+}
+
+export type IBankAccountGetResponse = IBankAccount;
+
+export interface IBankAccountDeleteResponse {
+	deleted: boolean;
+}
+
+// Transfers
+export interface ITransferCreateRequest {
+	amount: string; // integer as string, in cents
+	statement_descriptor: string;
+	description: string;
+}
+
+export type ITransfer = any
+
+export interface ITransferCreateResponse extends ITransfer {}
+
+export type ITransferListResponse = any
+
+
+export type ITransferGetResponse = ITransfer;
+
+export type ITransferTransaction = any
+
+export type ITransferTransactionListResponse = any
+
 
