@@ -38,8 +38,8 @@ export class Transactions {
 		return resp.data;
 	}
 
-	async capture<T extends ITransaction.Any>(transactionID: string, amount: number) {
-		const resp = await this.adapter.post<T[]>(`v1/transaction/capture/${transactionID}`, { amount })
+	async capture(transactionID: string, amount: number) {
+		const resp = await this.adapter.post<ITransaction.CapturedCredit[]>(`v1/transaction/capture/${transactionID}`, { amount })
 		return resp.data
 	}
 
