@@ -18,14 +18,14 @@ export interface IRawCustomer {
 	phone_number?: string,
 	customer_type: 'person_natural' | 'person_legal',
 	gender?: 'male' | 'female',
-	address?: {
-		line1: string,
-		line2: number,
-		line3: string,
-		neighborhood: string,
+	address: {
+		line1?: string,
+		line2?: number,
+		line3?: string,
+		neighborhood?: string,
 		city: string,
 		state: string,
-		postal_code: string
+		postal_code?: string
 	}
 }
 export interface ICustomer extends IRawCustomer {
@@ -952,7 +952,7 @@ export interface IBankAccountTokenizeResponse {
 	updated_at: string;
 }
 
-export interface IBankAccountAssociateResponse extends IBankAccount {}
+export interface IBankAccountAssociateResponse extends IBankAccount { }
 
 export interface IBankAccountListResponse {
 	resource: 'list';
@@ -979,7 +979,7 @@ export interface ITransferCreateRequest {
 
 export type ITransfer = any
 
-export interface ITransferCreateResponse extends ITransfer {}
+export interface ITransferCreateResponse extends ITransfer { }
 
 export type ITransferListResponse = any
 
