@@ -56,6 +56,13 @@ export class Seller {
 		const resp = await this.adapter.post(`v1/sellers/create/${rawSeller.business ? 'businesses' : 'individuals'}`, rawSeller);
 		return resp.data;
 	}
+	
+	async update(io_seller_id:string, rawSeller: IRawSellerLegal): Promise<ISellerLegalResponse>;
+	async update(io_seller_id:string, rawSeller: IRawSellerNatural): Promise<ISellerNaturalResponse>;
+	async update(io_seller_id:string, rawSeller: IRawSellerNatural | IRawSellerLegal): Promise<ISellerNaturalResponse | ISellerLegalResponse> {
+		const resp = await this.adapter.patch(`v1/sellers/update/${rawSeller.business ? 'businesses' : 'individuals'}/${io_seller_id}`, rawSeller);
+		return resp.data;
+	}
 
 	async get(sellerID: string) {
 		const resp = await this.adapter.get(`v1/sellers/get/${sellerID}`);
